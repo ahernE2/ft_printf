@@ -18,4 +18,5 @@ void	ft_putnbr_fd(int nbr, int fd)
 
 	nb = ft_itoa(nbr);
 	ft_putstr_fd(nb, fd);
+	free(nb);
 }

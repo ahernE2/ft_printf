@@ -59,6 +59,7 @@ void	ft_putstr_fd(char *s, int fd);
 int		ft_isprint(int c);
 // Declarations from ft_itoa.c
 char	*ft_itoa(int nb);
+char	*ft_itoa_base(int nb, int base);
 // Declarations from ft_atoi.c
 int		ft_atoi(const char *str);
 // Declarations from ft_tolower.c
