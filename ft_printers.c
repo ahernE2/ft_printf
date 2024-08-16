@@ -1,4 +1,16 @@
-# include "ft_printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printers.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/16 22:59:05 by alejhern          #+#    #+#             */
+/*   Updated: 2024/08/16 23:21:16 by alejhern         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "printf.h"
 
 int	ft_printchar(char c)
 {
@@ -7,7 +19,7 @@ int	ft_printchar(char c)
 	return (1);
 }
 
-int ft_printstr(char *str, unsigned int bl_mayus)
+int	ft_printstr(char *str, unsigned int bl_mayus)
 {
 	int		len;
 	char	c;
@@ -28,19 +40,21 @@ int ft_printstr(char *str, unsigned int bl_mayus)
 	return (len);
 }
 
-static int ft_print_nbr_base(unsigned long long nb, int base)
+static int	ft_print_nbr_base(unsigned long long nb, int base)
 {
-    int len = 0;
-    if (nb >= base)
-        len += ft_print_nbr_base(nb / base, base);
-    
-    if (ft_printchar("0123456789abcdef"[nb % base]) != 1)
-        return -1;
+	int	len;
 
-    return len + 1;
+	len = 0;
+	if (nb >= (unsigned long long)base)
+		len += ft_print_nbr_base(nb / base, base);
+	if (ft_printchar("0123456789abcdef"[nb % base]) != 1)
+		return (-1);
+	else
+		len++;
+	return (len);
 }
 
- int ft_printnbr(int nb, int base, unsigned int isunsigned, unsigned int bl_mayus)
+int	ft_printnbr(int nb, int base, int isunsigned, int bl_mayus)
 {
 	int		len;
 	char	*str;
@@ -62,12 +76,11 @@ int	ft_printpointer(void *ptr)
 	int					len;
 
 	pointer = (unsigned long long)ptr;
-	len = 0;
 	len = ft_printstr("0x", 0);
 	if (len != 2)
 		return (-1);
 	len += ft_print_nbr_base(pointer, 16);
-    if ((len - 2) == -1)
-        len = -1;
+	if (len - 2 == -3)
+		return (-1);
 	return (len);
 }
