@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:02:27 by alejhern          #+#    #+#             */
-/*   Updated: 2024/08/16 23:33:08 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/08/18 15:26:12 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	type_var(char c, va_list element)
 {
-	if (c == 'c' || c == '%')
+	if (c == 'c')
 		return (ft_printchar(va_arg(element, int)));
 	if (c == 's')
 		return (ft_printstr(va_arg(element, char *), 0));
@@ -35,8 +35,10 @@ static int	check_print_param(char c, va_list element)
 {
 	if (c == '%')
 		return (ft_printchar('%'));
-	else
+	else if (ft_strchr("cspdiuxX", c))
 		return (type_var(c, element));
+	else
+		return (0);
 }
 
 static int	ft_printer(char const *str, va_list element)
@@ -85,8 +87,8 @@ int	main(void)
 	str = "Pointer Test";
 	printf("Pointer: %p\n", str);
 	len = ft_printf("Pointer: %p", str);
-	ft_printf("\nLength: %d\n", len);
-	ft_printf("%u\n", -99);
-	printf("%u", -99);
+	ft_printf("\nPointert:%0 -+#79212.3c\n", str);
+	ft_printf("%x\n", -99);
+	printf("%x", -99);
 	return (0);
 }
