@@ -6,7 +6,7 @@
 #    By: alejhern <alejhern@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/09 21:50:18 by alejhern          #+#    #+#              #
-#    Updated: 2024/09/09 22:08:47 by alejhern         ###   ########.fr        #
+#    Updated: 2024/09/09 22:21:26 by alejhern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,3 +55,11 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
+# **************************************************************************** #
+#                                BONUS                                         #
+# **************************************************************************** #
+
+bonus: all
+	@echo "Compilando el objetivo BONUS..."
+	@make -C $(LIB_DIR) bonus
