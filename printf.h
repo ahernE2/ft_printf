@@ -31,12 +31,12 @@ typedef struct s_flags
 t_flags	init_flags(void);
 t_flags	parse_flags(const char **str);
 void	ft_printpad(char pad_char, int pad_len, int *len);
-void	ft_printstr_flags(t_flags flags, int str_len, int *len);
+void	ft_printnbr_flags(int nb, t_flags flags, int total_len, char *prefix, int *len);
 void	ft_printchar(char c, t_flags flags, int bl_mayus, int *len);	
 void	ft_printstr(char *str, t_flags flags, int bl_mayus, int *len);
 void	ft_printnbr(int nb, t_flags flags, int *len);
 void	ft_printnbr_hex(unsigned int nb, t_flags flags, int bl_mayus, int *len);
 void	ft_printpointer(void *ptr, t_flags flags, int *len);
-int	ft_printf(char const *str, ...);
+int		ft_printf(char const *str, ...);
 
 #endif

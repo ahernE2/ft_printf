@@ -28,21 +28,40 @@ int	main(void)
 	len_orig = printf("PRINTF: String: %s, Pointer: %p\n", str, ptr);
 	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
 
-	// Test de números enteros con flags
+	// Test de números enteros con flags (+, espacio)
 	num = 42;
 	len_ft = ft_printf("FT_PRINTF: Entero: %+d, Con espacio: % d\n", num, num);
 	len_orig = printf("PRINTF: Entero: %+d, Con espacio: % d\n", num, num);
 	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
 
+	// Test con número negativo y flag '+'
+	num = -42;
+	len_ft = ft_printf("FT_PRINTF: Entero negativo: %+d\n", num);
+	len_orig = printf("PRINTF: Entero negativo: %+d\n", num);
+	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
+
 	// Test de enteros con ancho de campo y relleno de ceros
+	num = 42;
 	len_ft = ft_printf("FT_PRINTF: Entero con ancho y ceros: %010d\n", num);
 	len_orig = printf("PRINTF: Entero con ancho y ceros: %010d\n", num);
 	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
 
-	// Test de hexadecimales (mayúscula y minúscula) con hash
+	// Test con número negativo y ancho/ceros
+	num = -42;
+	len_ft = ft_printf("FT_PRINTF: Entero negativo con ancho y ceros: %010d\n", num);
+	len_orig = printf("PRINTF: Entero negativo con ancho y ceros: %010d\n", num);
+	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
+
+	// Test de hexadecimales con hash y MAYÚSCULAS
 	hex_num = 255;
 	len_ft = ft_printf("FT_PRINTF: Hexadecimal: %#x, Hexadecimal (MAYÚS): %#X\n", hex_num, hex_num);
 	len_orig = printf("PRINTF: Hexadecimal: %#x, Hexadecimal (MAYÚS): %#X\n", hex_num, hex_num);
+	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
+
+	// Test de hexadecimales grandes
+	hex_num = 4294967295U;
+	len_ft = ft_printf("FT_PRINTF: Hexadecimal grande: %#x\n", hex_num);
+	len_orig = printf("PRINTF: Hexadecimal grande: %#x\n", hex_num);
 	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
 
 	// Test de enteros con precisión
@@ -51,9 +70,21 @@ int	main(void)
 	len_orig = printf("PRINTF: Entero con precisión: %.5d\n", num);
 	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
 
+	// Test de enteros negativos con precisión
+	num = -123;
+	len_ft = ft_printf("FT_PRINTF: Entero negativo con precisión: %.5d\n", num);
+	len_orig = printf("PRINTF: Entero negativo con precisión: %.5d\n", num);
+	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
+
 	// Test de string con precisión
 	len_ft = ft_printf("FT_PRINTF: String con precisión: %.5s\n", str);
 	len_orig = printf("PRINTF: String con precisión: %.5s\n", str);
+	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
+
+	// Test de string nulo
+	str = NULL;
+	len_ft = ft_printf("FT_PRINTF: String nulo: %s\n", str);
+	len_orig = printf("PRINTF: String nulo: %s\n", str);
 	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
 
 	// Test de caracteres
@@ -71,6 +102,17 @@ int	main(void)
 	len_orig = printf("PRINTF: Porcentaje %%\n");
 	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
 
+	// Test de enteros con ancho y precisión
+	num = 42;
+	len_ft = ft_printf("FT_PRINTF: Entero con ancho y precisión: %10.5d\n", num);
+	len_orig = printf("PRINTF: Entero con ancho y precisión: %10.5d\n", num);
+	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
+
+	// Test de enteros negativos con ancho y precisión
+	num = -42;
+	len_ft = ft_printf("FT_PRINTF: Entero negativo con ancho y precisión: %10.5d\n", num);
+	len_orig = printf("PRINTF: Entero negativo con ancho y precisión: %10.5d\n", num);
+	printf("FT_PRINTF Len: %d | PRINTF Len: %d\n\n", len_ft, len_orig);
+
 	return (0);
 }
-

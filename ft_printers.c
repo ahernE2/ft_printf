@@ -16,15 +16,18 @@ void	ft_printchar(char c, t_flags flags, int bl_mayus, int *len)
 {
 	if (*len == -1)
 		return ;
-	ft_printstr_flags(flags, 1, len);
+	if (!flags.minus && flags.width > 1)
+		ft_printpad(' ', flags.width - 1, len);
 	if (*len == -1)
 		return ;
 	if (bl_mayus)
 		c = ft_toupper(c);
 	if (write(1, &c, 1) != 1)
 		*len = -1;
-	(*len)++;
-	ft_printstr_flags(flags, 1, len);
+	else
+		(*len)++;
+	if (flags.minus && flags.width > 1)
+		ft_printpad(' ', flags.width - 1, len);
 }
 
 void	ft_printstr(char *str, t_flags flags, int bl_mayus, int *len)
@@ -36,37 +39,38 @@ void	ft_printstr(char *str, t_flags flags, int bl_mayus, int *len)
 	str_len = ft_strlen(str);
 	if (flags.dot >= 0 && flags.dot < str_len)
 		str_len = flags.dot;
-	ft_printstr_flags(flags, str_len, len);
+	if (!flags.minus && flags.width > str_len)
+		ft_printpad(' ', flags.width - 1, len);
 	while (*str && str_len--)
 		ft_printchar(*str++, init_flags(), bl_mayus, len);
-	ft_printstr_flags(flags, str_len, len);
+	if (!flags.minus && flags.width > str_len)
+		ft_printpad(' ', flags.width - 1, len);
 }
 
 void	ft_printnbr(int nb, t_flags flags, int *len)
 {
 	char	*str;
+	int		padding;
 
 	str = ft_itoa(nb);
 	if (!str)
+	{
 		*len = -1;
-	if (nb >= 0 && flags.plus)
-		ft_printchar('+', init_flags(), 0, len);
-	else if (nb >= 0 && flags.space)
-		ft_printchar(' ', init_flags(), 0, len);
-	if (flags.minus && str)
-	{
-		ft_printstr(str, init_flags(), 0, len);
-		ft_printpad(' ', flags.width - *len, len);
+		return ;
 	}
-	else
-	{
-		if (flags.zero && flags.width > *len)
-			ft_printpad('0', flags.width - *len, len);
-		else
-			ft_printpad(' ', flags.width - *len, len);
-		ft_printstr(str, init_flags(), 0, len);
-	}
-	free(str);
+	if (nb < 0)
+		str++;
+	padding = 0;
+	if (flags.dot > (int) ft_strlen(str))
+		padding = flags.dot - ft_strlen(str);
+	if (!flags.minus && (!flags.zero || flags.dot != -1))
+		ft_printpad(' ', flags.width - ft_strlen(str) - padding - (nb < 0), len);
+	ft_printnbr_flags(nb, flags, ft_strlen(str) - padding, NULL, len);
+	ft_printpad('0', padding, len);
+	ft_printstr(str, init_flags(), 0, len);
+	if (flags.minus)
+		ft_printpad(' ', flags.width - ft_strlen(str) - padding - (nb < 0), len);
+	free(str - (nb < 0));
 }
 
 void	ft_printnbr_hex(unsigned int nb, t_flags flags, int bl_mayus, int *len)
@@ -79,7 +83,10 @@ void	ft_printnbr_hex(unsigned int nb, t_flags flags, int bl_mayus, int *len)
 		prefix = "0x";
 	str = ft_itoa_base(nb, 16);
 	if (!str)
+	{
 		*len = -1;
+		return ;
+	}
 	if (flags.minus)
 	{
 		ft_printstr(prefix, init_flags(), bl_mayus, len);
@@ -88,16 +95,7 @@ void	ft_printnbr_hex(unsigned int nb, t_flags flags, int bl_mayus, int *len)
 	}
 	else
 	{
-		if (flags.zero && !flags.minus && flags.dot == -1)
-		{
-			ft_printstr(prefix, init_flags(), bl_mayus, len);
-			ft_printpad('0', flags.width - *len, len);
-		}
-		else
-		{
-			ft_printpad(' ', flags.width - (ft_strlen(prefix) + ft_strlen(str)), len);
-			ft_printstr(prefix, init_flags(), bl_mayus, len);
-		}
+		ft_printnbr_flags(1, flags, ft_strlen(str), prefix, len);
 		ft_printstr(str, init_flags(), bl_mayus, len);
 	}
 	free(str);
