@@ -6,11 +6,11 @@
 /*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:02:27 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/09 03:44:14 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/09 22:13:17 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 
 static int	type_var(char c, va_list element, t_flags flags)
 {

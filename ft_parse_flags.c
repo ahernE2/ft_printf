@@ -6,11 +6,11 @@
 /*   By: alejhern <alejhern@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 21:11:03 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/09 21:47:44 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/09 22:12:51 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 
 t_flags	init_flags(void)
 {

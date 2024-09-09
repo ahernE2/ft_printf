@@ -6,11 +6,11 @@
 /*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 22:59:05 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/09 22:04:13 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/09 22:13:08 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 
 void	ft_printchar(char c, t_flags flags, int bl_mayus, int *len)
 {
