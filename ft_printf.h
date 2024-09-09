@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf.h                                           :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
+/*   By: alejhern <alejhern@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/16 23:08:58 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/09 21:44:01 by alejhern         ###   ########.fr       */
+/*   Created: 2024/09/09 22:17:35 by alejhern          #+#    #+#             */
+/*   Updated: 2024/09/09 22:18:11 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINTF_H
-# define PRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
 # include <stdio.h>
 # include <stdarg.h>
