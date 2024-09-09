@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 22:59:05 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/09 03:53:44 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/09 22:04:13 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,24 @@ void	ft_printnbr(int nb, t_flags flags, int *len)
 	if (flags.dot > (int) ft_strlen(str))
 		padding = flags.dot - ft_strlen(str);
 	if (!flags.minus && (!flags.zero || flags.dot != -1))
-		ft_printpad(' ', flags.width - ft_strlen(str) - padding - (nb < 0), len);
-	ft_printnbr_flags(nb, flags, ft_strlen(str) - padding, NULL, len);
+		ft_printpad(' ', flags.width - ft_strlen(str)
+			- padding - (nb < 0), len);
+	ft_printnbr_flags(nb, flags, ft_strlen(str) - padding, len);
 	ft_printpad('0', padding, len);
 	ft_printstr(str, init_flags(), 0, len);
 	if (flags.minus)
-		ft_printpad(' ', flags.width - ft_strlen(str) - padding - (nb < 0), len);
+		ft_printpad(' ', flags.width - ft_strlen(str)
+			- padding - (nb < 0), len);
 	free(str - (nb < 0));
 }
 
 void	ft_printnbr_hex(unsigned int nb, t_flags flags, int bl_mayus, int *len)
 {
 	char	*str;
-	char	*prefix;
 
-	prefix = "";
+	flags.prefix = "";
 	if (flags.hash && nb != 0)
-		prefix = "0x";
+		flags.prefix = "0x";
 	str = ft_itoa_base(nb, 16);
 	if (!str)
 	{
@@ -89,13 +90,13 @@ void	ft_printnbr_hex(unsigned int nb, t_flags flags, int bl_mayus, int *len)
 	}
 	if (flags.minus)
 	{
-		ft_printstr(prefix, init_flags(), bl_mayus, len);
+		ft_printstr(flags.prefix, init_flags(), bl_mayus, len);
 		ft_printstr(str, init_flags(), bl_mayus, len);
 		ft_printpad(' ', flags.width - *len, len);
 	}
 	else
 	{
-		ft_printnbr_flags(1, flags, ft_strlen(str), prefix, len);
+		ft_printnbr_flags(bl_mayus, flags, ft_strlen(str), len);
 		ft_printstr(str, init_flags(), bl_mayus, len);
 	}
 	free(str);

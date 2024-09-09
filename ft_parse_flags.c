@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 21:11:03 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/09 02:54:41 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/09 21:47:44 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ t_flags	init_flags(void)
 	flags.hash = 0;
 	flags.space = 0;
 	flags.plus = 0;
+	flags.prefix = NULL;
 	return (flags);
 }
 
-static t_flags parse_nbr_flags(t_flags flags, const char **str)
+static t_flags	parse_nbr_flags(t_flags flags, const char **str)
 {
 	while (**str == '.' || ft_isdigit(**str))
 	{
@@ -37,14 +38,14 @@ static t_flags parse_nbr_flags(t_flags flags, const char **str)
 				flags.dot = ft_atoi(*str);
 			while (ft_isdigit(**str))
 				(*str)++;
-			continue;
+			continue ;
 		}
 		else if (ft_isdigit(**str))
 		{
 			flags.width = ft_atoi(*str);
 			while (ft_isdigit(**str))
 				(*str)++;
-			continue;
+			continue ;
 		}
 		(*str)++;
 	}
@@ -80,19 +81,20 @@ void	ft_printpad(char pad_char, int pad_len, int *len)
 		ft_printchar(pad_char, init_flags(), 0, len);
 }
 
-void	ft_printnbr_flags(int nb, t_flags flags, int total_len, char *prefix, int *len)
+void	ft_printnbr_flags(int nb, t_flags flags, int total_len, int *len)
 {
-	if (prefix)
+	if (flags.prefix)
 	{
 		if (flags.zero && !flags.minus && flags.dot == -1)
 		{
-			ft_printstr(prefix, init_flags(), nb, len);
+			ft_printstr(flags.prefix, init_flags(), nb, len);
 			ft_printpad('0', flags.width - *len, len);
 		}
 		else
 		{
-			ft_printpad(' ', flags.width - (ft_strlen(prefix) + total_len), len);
-			ft_printstr(prefix, init_flags(), nb, len);
+			ft_printpad(' ', flags.width - (ft_strlen(flags.prefix)
+					+ total_len), len);
+			ft_printstr(flags.prefix, init_flags(), nb, len);
 		}
 		return ;
 	}
