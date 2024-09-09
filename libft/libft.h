@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 19:46:34 by alejhern          #+#    #+#             */
-/*   Updated: 2024/07/07 19:46:47 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/09 03:41:54 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_putstr_fd(char *s, int fd);
 int		ft_isprint(int c);
 // Declarations from ft_itoa.c
 char	*ft_itoa(int nb);
-char	*ft_itoa_base(int nb, int base);
+char	*ft_itoa_base(unsigned long long nb, int base);
 // Declarations from ft_atoi.c
 int		ft_atoi(const char *str);
 // Declarations from ft_tolower.c

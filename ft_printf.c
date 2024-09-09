@@ -6,45 +6,41 @@
 /*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:02:27 by alejhern          #+#    #+#             */
-/*   Updated: 2024/08/18 15:26:12 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/09 03:44:14 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-static int	type_var(char c, va_list element)
+static int	type_var(char c, va_list element, t_flags flags)
 {
-	if (c == 'c')
-		return (ft_printchar(va_arg(element, int)));
-	if (c == 's')
-		return (ft_printstr(va_arg(element, char *), 0));
-	if (c == 'p')
-		return (ft_printpointer(va_arg(element, void *)));
-	if (c == 'd' || c == 'i')
-		return (ft_printnbr(va_arg(element, int), 10, 0, 0));
-	if (c == 'u')
-		return (ft_printnbr(va_arg(element, int), 10, 1, 0));
-	if (c == 'x')
-		return (ft_printnbr(va_arg(element, int), 16, 0, 0));
-	if (c == 'X')
-		return (ft_printnbr(va_arg(element, int), 16, 0, 1));
-	return (0);
-}
+	int	len;
 
-static int	check_print_param(char c, va_list element)
-{
+	len = 0;
+	if (c == 'c')
+		ft_printchar(va_arg(element, int), flags, 0, &len);
+	if (c == 's')
+		ft_printstr(va_arg(element, char *), flags, 0, &len);
+	if (c == 'p')
+		ft_printpointer(va_arg(element, void *), flags, &len);
+	if (c == 'd' || c == 'i')
+		ft_printnbr(va_arg(element, int), flags, &len);
+	if (c == 'u')
+		ft_printnbr(va_arg(element, unsigned int), flags, &len);
+	if (c == 'x')
+		ft_printnbr_hex(va_arg(element, unsigned int), flags, 0, &len);
+	if (c == 'X')
+		ft_printnbr_hex(va_arg(element, unsigned int), flags, 1, &len);
 	if (c == '%')
-		return (ft_printchar('%'));
-	else if (ft_strchr("cspdiuxX", c))
-		return (type_var(c, element));
-	else
-		return (0);
+		ft_printchar('%', flags, 0, &len);
+	return (len);
 }
 
 static int	ft_printer(char const *str, va_list element)
 {
-	int	len;
-	int	aux;
+	int		len;
+	int		aux;
+	t_flags	flags;
 
 	len = 0;
 	while (*str)
@@ -52,16 +48,17 @@ static int	ft_printer(char const *str, va_list element)
 		if (*str == '%')
 		{
 			str++;
-			aux = check_print_param(*str, element);
+			flags = parse_flags(&str);
+			aux = type_var(*str, element, flags);
 			if (aux == -1)
 				return (-1);
 			len += aux;
 		}
 		else
 		{
-			if (ft_printchar(*str) != 1)
+			ft_printchar(*str, init_flags(), 0, &len);
+			if (len == -1)
 				return (-1);
-			len++;
 		}
 		str++;
 	}
@@ -77,18 +74,4 @@ int	ft_printf(char const *str, ...)
 	len = ft_printer(str, element);
 	va_end(element);
 	return (len);
-}
-
-int	main(void)
-{
-	char	*str;
-	int		len;
-
-	str = "Pointer Test";
-	printf("Pointer: %p\n", str);
-	len = ft_printf("Pointer: %p", str);
-	ft_printf("\nPointert:%0 -+#79212.3c\n", str);
-	ft_printf("%x\n", -99);
-	printf("%x", -99);
-	return (0);
 }
