@@ -64,12 +64,14 @@ void	ft_printnbr(int nb, t_flags flags, int *len)
 	if (flags.dot > (int) ft_strlen(str))
 		padding = flags.dot - ft_strlen(str);
 	if (!flags.minus && (!flags.zero || flags.dot != -1))
-		ft_printpad(' ', flags.width - ft_strlen(str) - padding - (nb < 0), len);
+		ft_printpad(' ', flags.width - ft_strlen(str)
+			- padding - (nb < 0), len);
 	ft_printnbr_flags(nb, flags, ft_strlen(str) - padding, len);
 	ft_printpad('0', padding, len);
 	ft_printstr(str, init_flags(), 0, len);
 	if (flags.minus)
-		ft_printpad(' ', flags.width - ft_strlen(str) - padding - (nb < 0), len);
+		ft_printpad(' ', flags.width - ft_strlen(str)
+			- padding - (nb < 0), len);
 	free(str - (nb < 0));
 }
 
@@ -113,16 +115,11 @@ void	ft_printpointer(void *ptr, t_flags flags, int *len)
 	}
 	pointer = (unsigned long long)ptr;
 	str = ft_itoa_base(pointer, 16);
-	if (!str)
-	{
-		*len = -1;
-		return ;
-	}
 	str_pointer = ft_strjoin("0x", str);
-	if (!str_pointer)
+	if (!str || !str_pointer)
 	{
-		free(str);
 		*len = -1;
+		free(str);
 		return ;
 	}
 	ft_printstr(str_pointer, flags, 0, len);
