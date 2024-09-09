@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 22:59:05 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/09 22:13:08 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/09 23:04:55 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	ft_printstr(char *str, t_flags flags, int bl_mayus, int *len)
 	if (flags.dot >= 0 && flags.dot < str_len)
 		str_len = flags.dot;
 	if (!flags.minus && flags.width > str_len)
-		ft_printpad(' ', flags.width - 1, len);
+		ft_printpad(' ', flags.width - str_len, len);
 	while (*str && str_len--)
 		ft_printchar(*str++, init_flags(), bl_mayus, len);
-	if (!flags.minus && flags.width > str_len)
-		ft_printpad(' ', flags.width - 1, len);
+	if (flags.minus && flags.width > str_len)
+		ft_printpad(' ', flags.width - str_len, len);
 }
 
 void	ft_printnbr(int nb, t_flags flags, int *len)
@@ -64,14 +64,12 @@ void	ft_printnbr(int nb, t_flags flags, int *len)
 	if (flags.dot > (int) ft_strlen(str))
 		padding = flags.dot - ft_strlen(str);
 	if (!flags.minus && (!flags.zero || flags.dot != -1))
-		ft_printpad(' ', flags.width - ft_strlen(str)
-			- padding - (nb < 0), len);
+		ft_printpad(' ', flags.width - ft_strlen(str) - padding - (nb < 0), len);
 	ft_printnbr_flags(nb, flags, ft_strlen(str) - padding, len);
 	ft_printpad('0', padding, len);
 	ft_printstr(str, init_flags(), 0, len);
 	if (flags.minus)
-		ft_printpad(' ', flags.width - ft_strlen(str)
-			- padding - (nb < 0), len);
+		ft_printpad(' ', flags.width - ft_strlen(str) - padding - (nb < 0), len);
 	free(str - (nb < 0));
 }
 
@@ -108,13 +106,25 @@ void	ft_printpointer(void *ptr, t_flags flags, int *len)
 	char				*str;
 	char				*str_pointer;
 
+	if (!ptr)
+	{
+		ft_printstr("(nil)", init_flags(), 0, len);
+		return ;
+	}
 	pointer = (unsigned long long)ptr;
 	str = ft_itoa_base(pointer, 16);
 	if (!str)
+	{
 		*len = -1;
+		return ;
+	}
 	str_pointer = ft_strjoin("0x", str);
 	if (!str_pointer)
+	{
+		free(str);
 		*len = -1;
+		return ;
+	}
 	ft_printstr(str_pointer, flags, 0, len);
 	free(str);
 	free(str_pointer);
