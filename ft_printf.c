@@ -12,27 +12,52 @@
 
 #include "ft_printf.h"
 
+static void	ft_prepare_nb(int nb, t_flags flags, int base, int *len)
+{
+	char	*str;
+
+	if (base == 10 || base == 16)
+		str = ft_itoa_base((unsigned int) nb, base);
+	else
+		str = ft_itoa(nb);
+	if (!str)
+	{
+		*len = -1;
+		return ;
+	}
+	if (base == 10)
+		ft_printnbr(1, str, flags, len);
+	else if (base == 16)
+		ft_printnbr_hex(nb, str, flags, len);
+	else
+		ft_printnbr(nb, str, flags, len);
+	free(str);
+}
+
 static int	type_var(char c, va_list element, t_flags flags)
 {
 	int	len;
 
 	len = 0;
 	if (c == 'c')
-		ft_printchar(va_arg(element, int), flags, 0, &len);
+		ft_printchar(va_arg(element, int), flags, &len);
 	if (c == 's')
-		ft_printstr(va_arg(element, char *), flags, 0, &len);
+		ft_printstr(va_arg(element, char *), flags, &len);
 	if (c == 'p')
 		ft_printpointer(va_arg(element, void *), flags, &len);
 	if (c == 'd' || c == 'i')
-		ft_printnbr(va_arg(element, int), flags, &len);
+		ft_prepare_nb(va_arg(element, int), flags, 0, &len);
 	if (c == 'u')
-		ft_printnbr(va_arg(element, unsigned int), flags, &len);
+		ft_prepare_nb(va_arg(element, int), flags, 10, &len);
 	if (c == 'x')
-		ft_printnbr_hex(va_arg(element, unsigned int), flags, 0, &len);
+		ft_prepare_nb(va_arg(element, int), flags, 16, &len);
 	if (c == 'X')
-		ft_printnbr_hex(va_arg(element, unsigned int), flags, 1, &len);
+	{
+		flags.bl_mayus = 1;
+		ft_prepare_nb(va_arg(element, int), flags, 16, &len);
+	}
 	if (c == '%')
-		ft_printchar('%', flags, 0, &len);
+		ft_printchar('%', flags, &len);
 	return (len);
 }
 
@@ -56,7 +81,7 @@ static int	ft_printer(char const *str, va_list element)
 		}
 		else
 		{
-			ft_printchar(*str, init_flags(), 0, &len);
+			ft_printchar(*str, init_flags(0), &len);
 			if (len == -1)
 				return (-1);
 		}
