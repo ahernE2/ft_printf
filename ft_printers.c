@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 22:59:05 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/10 18:40:49 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/10 19:37:04 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,22 @@ void	ft_printchar(char c, t_flags flags, int *len)
 
 void	ft_printstr(char *str, t_flags flags, int *len)
 {
-	int	str_len;
+	int str_len;
+	int	padding;
 
 	if (!str)
 		str = "(null)";
 	str_len = ft_strlen(str);
-	if (flags.dot >= 0 && flags.dot < str_len)
+	padding = flags.width - str_len;
+	padding *= (flags.width > str_len);
+	if (flags.dot >= 0 && flags.dot < padding)
 		str_len = flags.dot;
-	if (!flags.minus && flags.width > str_len)
+	if (!flags.minus)
 		ft_printpad(' ', flags.width - str_len, len);
 	while (*str && str_len--)
 		ft_printchar(*str++, init_flags(flags.bl_mayus), len);
-	if (flags.minus && flags.width > str_len)
-		ft_printpad(' ', flags.width - str_len, len);
+	if (flags.minus)
+		ft_printpad(' ', padding, len);
 }
 
 void	ft_printnbr(int nb, char *str, t_flags flags, int *len)
@@ -105,13 +108,14 @@ void	ft_printpointer(void *ptr, t_flags flags, int *len)
 		return ;
 	}
 	padding = flags.width - ft_strlen(str) - 2;
+	padding *= (flags.width > (int)(ft_strlen(str) + 2));
 	if (!flags.minus && padding > 0 && flags.zero && flags.dot != -1)
 		ft_printpad('0', padding, len);
-	else if (!flags.minus && padding > 0 && !flags.zero)
+	else if (!flags.minus && !flags.zero)
 		ft_printpad(' ', padding, len);
 	ft_printstr("0x", init_flags(flags.bl_mayus), len);
 	ft_printstr(str, init_flags(flags.bl_mayus), len);
-	if (flags.minus && padding > 0)
+	if (flags.minus)
 		ft_printpad(' ', padding, len);
 	free(str);
 }
