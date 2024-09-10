@@ -40,7 +40,7 @@ void	ft_printstr(char *str, t_flags flags, int *len)
 	str_len = ft_strlen(str);
 	padding = flags.width - str_len;
 	padding *= (flags.width > str_len);
-	if (flags.dot >= 0 && flags.dot < padding)
+	if (flags.dot >= 0 && flags.dot < str_len)
 		str_len = flags.dot;
 	if (!flags.minus)
 		ft_printpad(' ', flags.width - str_len, len);
