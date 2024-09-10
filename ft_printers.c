@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 22:59:05 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/09 23:04:55 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:40:49 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,21 @@ void	ft_printnbr(int nb, char *str, t_flags flags, int *len)
 
 void	ft_printnbr_hex(unsigned int nb, char *str, t_flags flags, int *len)
 {
+	int	padding;
+
 	flags.prefix = "";
 	if (flags.hash && nb != 0)
 		flags.prefix = "0x";
+	padding = flags.width - (ft_strlen(str) + ft_strlen(flags.prefix));
 	if (flags.minus)
 	{
 		ft_printstr(flags.prefix, init_flags(flags.bl_mayus), len);
 		ft_printstr(str, init_flags(flags.bl_mayus), len);
-		ft_printpad(' ', flags.width - *len, len);
+		ft_printpad(' ', padding, len);
 	}
 	else
 	{
-		ft_printnbr_flags(0, flags, ft_strlen(str), len);
+		ft_printnbr_flags(0, flags, padding, len);
 		ft_printstr(str, init_flags(flags.bl_mayus), len);
 	}
 }
