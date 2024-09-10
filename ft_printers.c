@@ -87,25 +87,28 @@ void	ft_printnbr_hex(unsigned int nb, char *str, t_flags flags, int *len)
 
 void	ft_printpointer(void *ptr, t_flags flags, int *len)
 {
-	unsigned long long	pointer;
 	char				*str;
-	char				*str_pointer;
+	int					padding;
 
 	if (!ptr)
 	{
-		ft_printstr("(nil)", init_flags(flags.bl_mayus), len);
+		ft_printstr("(nil)", flags, len);
 		return ;
 	}
-	pointer = (unsigned long long)ptr;
-	str = ft_itoa_base(pointer, 16);
-	str_pointer = ft_strjoin("0x", str);
-	if (!str || !str_pointer)
+	str = ft_itoa_base((unsigned long long)ptr, 16);
+	if (!str)
 	{
 		*len = -1;
-		free(str);
 		return ;
 	}
-	ft_printstr(str_pointer, flags, len);
+	padding = flags.width - ft_strlen(str) - 2;
+	if (!flags.minus && padding > 0 && flags.zero && flags.dot != -1)
+		ft_printpad('0', padding, len);
+	else if (!flags.minus && padding > 0 && !flags.zero)
+		ft_printpad(' ', padding, len);
+	ft_printstr("0x", init_flags(flags.bl_mayus), len);
+	ft_printstr(str, init_flags(flags.bl_mayus), len);
+	if (flags.minus && padding > 0)
+		ft_printpad(' ', padding, len);
 	free(str);
-	free(str_pointer);
 }
