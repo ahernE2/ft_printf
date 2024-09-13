@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 22:59:05 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/13 06:20:24 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:28:00 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ void	ft_printstr(char *str, t_flags flags, int *len)
 	int	str_len;
 	int	padding;
 
-	if (!str)
+	if (!str && (flags.dot >= 6 || flags.dot == -1))
 		str = "(null)";
+	else if (!str)
+		str = "";
 	str_len = ft_strlen(str);
 	if (flags.dot >= 0 && flags.dot < str_len)
 		str_len = flags.dot;
@@ -82,14 +84,15 @@ void	ft_printnbr_hex(unsigned int nb, char *str, t_flags flags, int *len)
 	if (flags.minus)
 	{
 		ft_printstr(flags.prefix, init_flags(flags.bl_mayus), len);
+		str_len = (flags.dot - ft_strlen(str)) * (flags.dot != -1);
+		ft_printpad('0', str_len, len);
 		ft_printstr(str, init_flags(flags.bl_mayus), len);
 		ft_printpad(' ', padding, len);
 	}
 	else
 	{
-		ft_printnbr_flags(0, flags, padding, len);
-		padding = flags.dot - ft_strlen(str);
-		padding *= (flags.dot != -1 && !flags.zero);
+		ft_printnbr_flags((nb != 0), flags, padding, len);
+		padding = (flags.dot - ft_strlen(str)) * (flags.dot != -1);
 		ft_printpad('0', padding, len);
 		ft_printstr(str, init_flags(flags.bl_mayus), len);
 	}

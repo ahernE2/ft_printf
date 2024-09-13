@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:02:27 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/13 05:03:48 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/13 13:59:38 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ static void	ft_prepare_nb(int nb, t_flags flags, int base, int *len)
 {
 	char	*str;
 
-	if (base == 10 || base == 16)
+	if (flags.dot == 0 && nb == 0)
+		str = ft_strdup("");
+	else if (base == 10 || base == 16)
 		str = ft_itoa_base((unsigned int) nb, base);
 	else
 		str = ft_itoa(nb);
@@ -26,7 +28,7 @@ static void	ft_prepare_nb(int nb, t_flags flags, int base, int *len)
 		return ;
 	}
 	if (base == 10)
-		ft_printnbr(1, str, flags, len);
+		ft_printnbr(0, str, flags, len);
 	else if (base == 16)
 		ft_printnbr_hex(nb, str, flags, len);
 	else
