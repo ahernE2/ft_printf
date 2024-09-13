@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 21:11:03 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/13 14:33:09 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/13 15:13:03 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_printnbr_flags(int nb, t_flags flags, int total_len, int *len)
 {
 	if (flags.prefix)
 	{
-		if (flags.zero && total_len > 0 && nb != 0 && flags.dot == -1)
+		if (flags.zero && total_len > 0 && flags.dot == -1)
 		{
 			ft_printstr(flags.prefix, init_flags(flags.bl_mayus), len);
 			ft_printpad('0', total_len, len);
