@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 22:59:05 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/13 06:04:57 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/13 06:20:24 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,8 @@ void	ft_printnbr_hex(unsigned int nb, char *str, t_flags flags, int *len)
 	else
 	{
 		ft_printnbr_flags(0, flags, padding, len);
-		if (flags.dot != -1 && !flags.zero)
-			padding = flags.dot - ft_strlen(str);
-		else
-			padding = 0;
+		padding = flags.dot - ft_strlen(str);
+		padding *= (flags.dot != -1 && !flags.zero);
 		ft_printpad('0', padding, len);
 		ft_printstr(str, init_flags(flags.bl_mayus), len);
 	}
