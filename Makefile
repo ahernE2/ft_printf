@@ -6,15 +6,17 @@
 #    By: alejhern <alejhern@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/09 21:50:18 by alejhern          #+#    #+#              #
-#    Updated: 2024/09/09 22:21:26 by alejhern         ###   ########.fr        #
+#    Updated: 2024/09/14 00:13:55 by alejhern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 LIB_DIR = libft/
 
 SRCS = ft_parse_flags.c ft_printers.c ft_printf.c 
+SRCS_B = ft_parse_flags_bonus.c ft_printers_bonus.c ft_printf_bonus.c 
 
-OBJ = $(SRCS:.c=.o)
+OBJ_B = $(SRCS:.c=.o)
+OBJ_B = $(SRCS_B:.c=.o)
 
 # **************************************************************************** #
 #                                 VARIABLES                                    #
@@ -41,7 +43,7 @@ $(NAME): $(LIBFT) $(OBJ)
 $(LIBFT):
 	@make -C $(LIB_DIR)
 
-%.o: %.c $(PRINTF_DIR) ft_printf.h Makefile libft.h
+%.o: %.c $(PRINTF_DIR) ft_printf.h ft_printf_bonus.h Makefile libft.h
 	$(CC) $(CFLAGS) -I $(LIB_DIR) -c $< -o $@
 
 clean:
@@ -60,6 +62,6 @@ re: fclean all
 #                                BONUS                                         #
 # **************************************************************************** #
 
-bonus: all
-	@echo "Compilando el objetivo BONUS..."
-	@make -C $(LIB_DIR) bonus
+bonus: $(LIBFT) $(OBJ_B)
+	cp $(LIBFT) $(NAME)
+	ar -q $(NAME) $(OBJ_B)
