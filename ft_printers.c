@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 22:59:05 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/10 19:37:04 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/13 06:04:57 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	ft_printchar(char c, t_flags flags, int *len)
 		return ;
 	if (!flags.minus && flags.width > 1)
 		ft_printpad(' ', flags.width - 1, len);
-	if (*len == -1)
-		return ;
 	if (flags.bl_mayus)
 		c = ft_toupper(c);
 	if (write(1, &c, 1) != 1)
@@ -32,18 +30,17 @@ void	ft_printchar(char c, t_flags flags, int *len)
 
 void	ft_printstr(char *str, t_flags flags, int *len)
 {
-	int str_len;
+	int	str_len;
 	int	padding;
 
 	if (!str)
 		str = "(null)";
 	str_len = ft_strlen(str);
-	padding = flags.width - str_len;
-	padding *= (flags.width > str_len);
 	if (flags.dot >= 0 && flags.dot < str_len)
 		str_len = flags.dot;
+	padding = flags.width - str_len;
 	if (!flags.minus)
-		ft_printpad(' ', flags.width - str_len, len);
+		ft_printpad(' ', padding, len);
 	while (*str && str_len--)
 		ft_printchar(*str++, init_flags(flags.bl_mayus), len);
 	if (flags.minus)
@@ -73,11 +70,15 @@ void	ft_printnbr(int nb, char *str, t_flags flags, int *len)
 void	ft_printnbr_hex(unsigned int nb, char *str, t_flags flags, int *len)
 {
 	int	padding;
+	int	str_len;
 
 	flags.prefix = "";
 	if (flags.hash && nb != 0)
 		flags.prefix = "0x";
-	padding = flags.width - (ft_strlen(str) + ft_strlen(flags.prefix));
+	str_len = ft_strlen(str);
+	if (flags.dot > str_len)
+		str_len = flags.dot;
+	padding = flags.width - (str_len + ft_strlen(flags.prefix));
 	if (flags.minus)
 	{
 		ft_printstr(flags.prefix, init_flags(flags.bl_mayus), len);
@@ -87,6 +88,11 @@ void	ft_printnbr_hex(unsigned int nb, char *str, t_flags flags, int *len)
 	else
 	{
 		ft_printnbr_flags(0, flags, padding, len);
+		if (flags.dot != -1 && !flags.zero)
+			padding = flags.dot - ft_strlen(str);
+		else
+			padding = 0;
+		ft_printpad('0', padding, len);
 		ft_printstr(str, init_flags(flags.bl_mayus), len);
 	}
 }

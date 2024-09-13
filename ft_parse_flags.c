@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 21:11:03 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/10 18:42:11 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/13 05:45:54 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,19 @@ static t_flags	parse_nbr_flags(t_flags flags, const char **str)
 			(*str)++;
 			if (ft_isdigit(**str))
 				flags.dot = ft_atoi(*str);
+			else
+				flags.dot = 0;
 			while (ft_isdigit(**str))
 				(*str)++;
-			continue ;
 		}
 		else if (ft_isdigit(**str))
 		{
 			flags.width = ft_atoi(*str);
 			while (ft_isdigit(**str))
 				(*str)++;
-			continue ;
 		}
-		(*str)++;
+		else
+			(*str)++;
 	}
 	return (flags);
 }

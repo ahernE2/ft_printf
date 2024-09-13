@@ -6,7 +6,7 @@
 /*   By: alejhern <alejhern@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:02:27 by alejhern          #+#    #+#             */
-/*   Updated: 2024/09/09 22:13:17 by alejhern         ###   ########.fr       */
+/*   Updated: 2024/09/13 05:03:48 by alejhern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ static int	type_var(char c, va_list element, t_flags flags)
 		ft_prepare_nb(va_arg(element, int), flags, 16, &len);
 	}
 	if (c == '%')
-		ft_printchar('%', flags, &len);
+	{
+		ft_printchar('%', init_flags(0), &len);
+	}
 	return (len);
 }
 
