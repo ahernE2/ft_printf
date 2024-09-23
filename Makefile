@@ -15,7 +15,7 @@ LIB_DIR = libft/
 SRCS = ft_parse_flags.c ft_printers.c ft_printf.c 
 SRCS_B = ft_parse_flags_bonus.c ft_printers_bonus.c ft_printf_bonus.c 
 
-OBJ_B = $(SRCS:.c=.o)
+OBJ = $(SRCS:.c=.o)
 OBJ_B = $(SRCS_B:.c=.o)
 
 # **************************************************************************** #
@@ -43,7 +43,7 @@ $(NAME): $(LIBFT) $(OBJ)
 $(LIBFT):
 	@make -C $(LIB_DIR)
 
-%.o: %.c $(PRINTF_DIR) ft_printf.h ft_printf_bonus.h Makefile libft.h
+%.o: %.c ft_printf.h ft_printf_bonus.h Makefile libft.h
 	$(CC) $(CFLAGS) -I $(LIB_DIR) -c $< -o $@
 
 clean:
