@@ -6,7 +6,7 @@
 #    By: alejhern <alejhern@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/09 21:50:18 by alejhern          #+#    #+#              #
-#    Updated: 2024/09/14 00:13:55 by alejhern         ###   ########.fr        #
+#    Updated: 2024/09/23 17:57:24 by alejhern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ $(LIBFT):
 
 clean:
 	@make -C $(LIB_DIR) clean
-	rm -f $(OBJ)
+	rm -f $(OBJ) $(OBJ_B)
 
 fclean: clean
 	@make -C $(LIB_DIR) fclean
