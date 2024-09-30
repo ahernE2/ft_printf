@@ -12,11 +12,9 @@
 
 LIB_DIR = libft/
 
-SRCS = ft_parse_flags.c ft_printers.c ft_printf.c 
-SRCS_B = ft_parse_flags_bonus.c ft_printers_bonus.c ft_printf_bonus.c 
+SRCS = ft_parse_flags.c ft_printers.c ft_printf.c
 
 OBJ = $(SRCS:.c=.o)
-OBJ_B = $(SRCS_B:.c=.o)
 
 # **************************************************************************** #
 #                                 VARIABLES                                    #
@@ -62,6 +60,6 @@ re: fclean all
 #                                BONUS                                         #
 # **************************************************************************** #
 
-bonus: $(LIBFT) $(OBJ_B)
+bonus: $(LIBFT) $(OBJ)
 	cp $(LIBFT) $(NAME)
-	ar -q $(NAME) $(OBJ_B)
+	ar -q $(NAME) $(OBJ)
